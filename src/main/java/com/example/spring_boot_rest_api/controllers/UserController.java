@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +27,14 @@ public class UserController {
 
     @Operation(summary = "Get all users")
     @GetMapping("/all")
+//    @PreAuthorize("hasRole.('USER')")
     public List<User> getAllUsers() {
         return userServiceImpl.getAllUsers();
     }
 
     @Operation(summary = "Get an user by ID")
     @GetMapping("/{id}")
+//    @PreAuthorize("hasAuthority('READ')")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userServiceImpl.getUserById(id);
         return ResponseEntity.ok(user);
@@ -59,4 +63,13 @@ public class UserController {
         userServiceImpl.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
+
+
+
+
+
+//    @GetMapping("/csrf-token")
+//    public CsrfToken getCsrfToken(CsrfToken token) {
+//        return token;
+//    }
 }

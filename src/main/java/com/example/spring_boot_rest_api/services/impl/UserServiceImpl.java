@@ -53,6 +53,13 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    @Override
+    public User getUserByName(String username) {
+        System.out.println("Looking up user: " + username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with name: " + username));
+    }
+
 //    public void registerUser(String username, String password, String role) {
 //        String encodedPassword = passwordEncoder.encode(password);
 //        User user = new User();

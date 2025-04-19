@@ -1,8 +1,8 @@
 package com.example.spring_boot_rest_api.enums;
 
-public enum authorities {
+public enum Permission {
     WRITE,
     READ,
-    UPDATE,
+//    UPDATE,
     DELETE
 }

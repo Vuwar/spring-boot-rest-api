@@ -7,9 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
@@ -35,9 +33,20 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    @Column(nullable = false)
-    private Role role;
+//    @Column(nullable = false)
+//    private Role role;
 //    private String authority;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AuthToken> tokens = new ArrayList<>();
 
     public User(String name, String email, int age) {
         this.name = name;
@@ -45,10 +54,9 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public User(String username, String password, Role role) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = role;
     }
 
     public User(Long id, String name, String email, int age) {
@@ -61,16 +69,21 @@ public class User implements UserDetails {
     public User() {
     }
 
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Set<GrantedAuthority> authorities = role.getAuthorities().stream()
+//                .map(SimpleGrantedAuthority::new)
+//                .collect(Collectors.toSet());
+//
+//        authorities.add(new SimpleGrantedAuthority(role.name()));
+//        return authorities;
+//    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authorities = role.getAuthorities().stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toSet());
-
-        authorities.add(new SimpleGrantedAuthority(role.name()));
-        return authorities;
+        return List.of();
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

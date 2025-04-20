@@ -1,4 +1,4 @@
-package com.example.spring_boot_rest_api.config;
+package com.example.spring_boot_rest_api.config.security.filters;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

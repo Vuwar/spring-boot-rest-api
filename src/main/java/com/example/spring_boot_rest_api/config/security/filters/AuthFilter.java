@@ -1,4 +1,4 @@
-package com.example.spring_boot_rest_api.config;
+package com.example.spring_boot_rest_api.config.security.filters;
 
 import com.example.spring_boot_rest_api.entities.AuthToken;
 import com.example.spring_boot_rest_api.entities.User;
@@ -7,7 +7,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.cglib.core.Local;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
